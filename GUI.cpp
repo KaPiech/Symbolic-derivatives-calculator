@@ -1,5 +1,5 @@
 #include "GUI.h"
-
+#include "Derivative.h"
 
 
 GUI::GUI(QWidget *parent)
@@ -52,10 +52,11 @@ void GUI::clean()
 void GUI::calculate()
 {
 	//pobieranie tekstu z pola
-	QString tekst = lineedit1->text();	
+	QString qtext = lineedit1->text();	
 
-	//test pobierania tekstu
-	lineedit2->setText(tekst);		
+	
+	//test pobierania tekstu 
+	lineedit2->setText(qtext);		
 
 
 
