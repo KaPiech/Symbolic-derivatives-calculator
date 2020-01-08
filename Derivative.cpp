@@ -1,12 +1,15 @@
+#pragma once
 #include "Derivative.h"
-#include <iostream>
+#include <string>
 
 using namespace std;
 
-Derivative::Derivative()
-{	
-	string text = qtext.toStdString();		//konwersja qstring na std::string
-	
+
+
+void Derivative::calc()
+{
+	int n = text.size();		//dlugosc stringa
 
 
 }
+

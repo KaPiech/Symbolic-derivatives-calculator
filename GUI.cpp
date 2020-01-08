@@ -1,9 +1,10 @@
 #include "GUI.h"
 #include "Derivative.h"
+#include "Derivative.cpp"
 
 
 GUI::GUI(QWidget *parent)
-	: QMainWindow(parent)
+	:QMainWindow(parent)
 {
 	ui.setupUi(this);
 
@@ -37,29 +38,29 @@ GUI::GUI(QWidget *parent)
 	label2->setGeometry(QRect(QPoint(50, 150),
 		QSize(100, 80)));
 
-	//signals-slots
+	//polaczenia signals-slots 
 	connect(button2, SIGNAL(clicked()), this, SLOT(clean()));
 	connect(button1, SIGNAL(clicked()), this, SLOT(calculate()));
 }
 
 //slots
-void GUI::clean()
+void GUI::clean()		//czyszczenie pól tekstowych
 {
-	lineedit1->clear();
+	lineedit1->clear();		
 	lineedit2->clear();
 }
 
-void GUI::calculate()
+void GUI::calculate()		//pobieranie funkcji i obliczanie pochodnej
 {
-	//pobieranie tekstu z pola
-	QString qtext = lineedit1->text();	
+	QString qtext = lineedit1->text();		//pobieranie tekstu z pola
 
-	
-	//test pobierania tekstu 
-	lineedit2->setText(qtext);		
-
+	Derivative function;
+	function.text = qtext.toStdString();		//konwersja qstring na std::string
+	function.calc();
 
 
+	QString result = QString::fromStdString(function.text);		//konwersja std::string na qstring
+	lineedit2->setText(result);
 }
 
 

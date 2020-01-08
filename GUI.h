@@ -5,16 +5,17 @@
 #include <QLineEdit>
 #include <QLabel>
 #include <QString>
+#include "Derivative.h"
 
 
 
-class GUI : public QMainWindow
+class GUI 
+	: public QMainWindow, public Derivative
 {
 	Q_OBJECT
 
 public:
 	GUI(QWidget *parent = Q_NULLPTR);
-	std::string a;
 private:
 	Ui::GUIClass ui;
 
