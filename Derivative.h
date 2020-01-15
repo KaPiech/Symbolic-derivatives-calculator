@@ -1,7 +1,5 @@
 #pragma once
 #include <string>
-#include "GUI.h"
-
 
 using namespace std;
 
@@ -9,9 +7,11 @@ class Derivative
 {
 public:
 	string	text;
-	int n;
+	int textsize;
 
 	Derivative() {};
 
 	void calc();
+	void infixtoONP();
+	void ONPtoinfix();
 };

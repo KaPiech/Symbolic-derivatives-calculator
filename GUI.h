@@ -4,18 +4,16 @@
 #include <QPushButton>
 #include <QLineEdit>
 #include <QLabel>
-#include <QString>
 #include "Derivative.h"
 
-
-
 class GUI 
-	: public QMainWindow, public Derivative
+	:public QMainWindow, public Derivative
 {
 	Q_OBJECT
 
 public:
 	GUI(QWidget *parent = Q_NULLPTR);
+
 private:
 	Ui::GUIClass ui;
 

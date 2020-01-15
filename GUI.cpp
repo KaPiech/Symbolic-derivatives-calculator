@@ -1,10 +1,10 @@
+#pragma once
 #include "GUI.h"
 #include "Derivative.h"
 #include "Derivative.cpp"
 
-
 GUI::GUI(QWidget *parent)
-	:QMainWindow(parent)
+	: QMainWindow(parent)
 {
 	ui.setupUi(this);
 
@@ -30,13 +30,13 @@ GUI::GUI(QWidget *parent)
 		QSize(500, 80)));
 
 	//opisy
-	label1 = new QLabel("Wpisz funkcje: ", this);
+	label1 = new QLabel("Wpisz funkcje f(x): ", this);
 	label1->setGeometry(QRect(QPoint(50, 10),
-		QSize(100, 80)));
+		QSize(150, 80)));
 
-	label2 = new QLabel("Pochodna: ", this);
+	label2 = new QLabel("Pochodna f'(x): ", this);
 	label2->setGeometry(QRect(QPoint(50, 150),
-		QSize(100, 80)));
+		QSize(150, 80)));
 
 	//polaczenia signals-slots 
 	connect(button2, SIGNAL(clicked()), this, SLOT(clean()));
@@ -46,7 +46,7 @@ GUI::GUI(QWidget *parent)
 //slots
 void GUI::clean()		//czyszczenie pól tekstowych
 {
-	lineedit1->clear();		
+	lineedit1->clear();
 	lineedit2->clear();
 }
 
@@ -56,13 +56,10 @@ void GUI::calculate()		//pobieranie funkcji i obliczanie pochodnej
 
 	Derivative function;
 	function.text = qtext.toStdString();		//konwersja qstring na std::string
-	function.calc();
+	function.infixtoONP();
 
 
 	QString result = QString::fromStdString(function.text);		//konwersja std::string na qstring
 	lineedit2->setText(result);
+	
 }
-
-
-
-
