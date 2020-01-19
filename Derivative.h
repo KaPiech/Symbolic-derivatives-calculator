@@ -8,7 +8,6 @@ class Derivative
 {
 public:
 	string	text;
-	int textsize;
 
 	Derivative() {};
 

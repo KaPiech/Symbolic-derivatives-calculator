@@ -10,7 +10,7 @@
 
 
 class GUI
-	: public QMainWindow
+	: public QMainWindow, public Derivative
 {
 	Q_OBJECT
 
@@ -22,19 +22,23 @@ private:
 	QPushButton *button1;
 	QPushButton *button2;
 	QPushButton *button3;
+	QPushButton *button4;
 
 	QLineEdit *lineedit1;
 	QLineEdit *lineedit2;
 	QLineEdit *lineedit3;
+	QLineEdit *lineedit4;
 
 	QLabel *label1;
 	QLabel *label2;
 	QLabel *label3;
+	QLabel *label4;
 
 private slots:
 	void clean();		//czyszczenie pól tekstowych
 
 public slots:
 	void calculate();		//pobieranie funkcji i obliczanie pochodnej
-	void ONP();
+	void ONP();				//pobieranie funkcji i obliczanie ONP
+	void infix();
 };
