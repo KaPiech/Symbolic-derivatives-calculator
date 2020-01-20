@@ -9,7 +9,7 @@ using namespace std;
 void Derivative::infixtoONP()		//konwersja infix na ONP
 {
 	int textsize = text.size();		//dlugosc stringa
-
+	d = text;
 
 	const char operators[5]{ '+','*','^','-','/' };
 	string s, wyj;
@@ -63,7 +63,7 @@ void Derivative::infixtoONP()		//konwersja infix na ONP
 	text = wyj;
 }
 
-
+/*
 void Derivative::ONPtoTree()		//konwersja ONP na drzewo
 {
 	string c;
@@ -105,7 +105,7 @@ void Derivative::ONPtoTree()		//konwersja ONP na drzewo
 						break;             
 					}
 				}
-		/*
+		
 				if (w->key < p->key)         
 				{                      
 					if (!p->left)       
@@ -126,9 +126,9 @@ void Derivative::ONPtoTree()		//konwersja ONP na drzewo
 				}
 
 			w->parent = p;                
-		*/
+		
 	}
-}
+}*/
 
 
 
@@ -140,168 +140,178 @@ void Derivative::calc()			//liczenie pochodnej z ONP
 	stack <char> temp;
 	char a, b, z;
 
-	for (int i = 0; i < textsize; i++)
-	{
-		temp.push(c[i]);
-
-		if (c[i] == '+' || c[i] == '*' || c[i] == '^' || c[i] == '-' || c[i] == '/')
-		{
-			temp.pop();
-			b = temp.top();
-			temp.pop();
-			a = temp.top();
-			temp.pop();
-
-			if (c[i] == '*')			//(a*b)'
-			{	
-				if (a == 'x' && b == 'x')
-				{	
-					wyj += '2';
-					z = 'x';
-				}
+	if (d == "sin(x)") { wyj += "cos(x)"; }
+	else
+		if (d == "cos(x)") { wyj = "-sin(x)"; }
+		else
+			if (d == "tg(x)") { wyj = "1/(cos(x)^2)"; }
+			else
+				if (d == "ctg(x)") { wyj = "-1/(sin(x)^2)"; }
 				else
-					if (a == 'x')
-					{
-						z = b;
-					}
+					if (d == "e^x") { wyj = "e^x"; }
 					else
-						if (b == 'x')
-						{
-							z = a;
-						}
+						if (d == "ln(x)") { wyj = "1/x"; }
 						else
-						{
-							z = '0';
-						}
-				temp.push(z);
-				wyj += z;
-			}
+							for (int i = 0; i < textsize; i++)
+							{
+								temp.push(c[i]);
+
+								if (c[i] == '+' || c[i] == '*' || c[i] == '^' || c[i] == '-' || c[i] == '/')
+								{
+									temp.pop();
+									b = temp.top();
+									temp.pop();
+									a = temp.top();
+									temp.pop();
+
+									if (c[i] == '*')			//(a*b)'
+									{	
+										if (a == 'x' && b == 'x')
+										{	
+											wyj += '2';
+											z = 'x';
+										}
+										else
+											if (a == 'x')
+											{
+												z = b;
+											}
+											else
+												if (b == 'x')
+												{
+													z = a;
+												}
+												else
+												{
+													z = '0';
+												}
+										temp.push(z);
+										//wyj += z;
+									}
 
 
-			if (c[i] == '+')			//(a+b)'
-			{
-				if (a == 'x' && b == 'x')
-				{
-					z = '2';
-				}
-				else
-					if (a == 'x')
-					{
-						z = '1';
-					}
-					else
-						if (b == 'x')
-						{
-							z = '1';
-						}
-						else
-						{
-							wyj = wyj.substr(0, wyj.size());		//poprawiæ !!!!!!!!!!!
-							z = b;
-						}
-				temp.push(z);
-				wyj += '+';
-				wyj += z;
-			}
+									if (c[i] == '+')			//(a+b)'
+									{
+										if (a == 'x' && b == 'x')
+										{
+											z = '2';
+										}
+										else
+											if (a == 'x')
+											{
+												z = '1';
+											}
+											else
+												if (b == 'x')
+												{
+													z = '1';
+												}
+												else
+												{
+													z = b;
+												}
+										temp.push(z); 
+										wyj += '+';
+										wyj += z;
+									}
 
 
-			if (c[i] == '-')			//(a-b)'
-			{
-				if (a == 'x' && b == 'x')
-				{
-					z = '0';
-				}
-				else
-					if (a == 'x')
-					{
-						wyj += '+';
-						z = '1';
-					}
-					else
-						if (b == 'x')
-						{	
-							wyj += '-';
-							z = '1';
-						}	 
-						else
-						{
-							//wyj = wyj.substr(0, wyj.size());				//poprawiæ !!!!!!!!!!!
-							wyj += '-';
-							z = b;
-						}
-				temp.push(z);
-				wyj += z;
-			}
+									if (c[i] == '-')			//(a-b)'
+									{
+										if (a == 'x' && b == 'x')
+										{
+											z = '0';
+										}
+										else
+											if (a == 'x')
+											{
+												wyj += '+';
+												z = '1';
+											}
+											else
+												if (b == 'x')
+												{	
+													wyj += '-';
+													z = '1';
+												}	 
+												else
+												{
+													wyj += '-';
+													z = b;
+												}
+										temp.push(z);
+										wyj += z;
+									}
 
 
-			if (c[i] == '^')			//(a^b)'
-			{
-				if (a == 'x' && b == 'x')
-				{	
-					wyj += "log(x)+";
-					z = '1';
-				}
-				else
-					if (a == 'x')
-					{
-						wyj += b;
-						wyj += "*x^";
-						wyj += char(int(b) - 1);
+									if (c[i] == '^')			//(a^b)'
+									{
+										if (a == 'x' && b == 'x')
+										{	
+											wyj += "log(x)+";
+											z = '1';
+										
+										}
+										else
+											if (a == 'x')
+											{
+												wyj += b;
+												wyj += "*x^";
+												wyj += char(int(b) - 1);
 						
-					}
-					else
-						if (b == 'x')
-						{
-							wyj += a;
-							wyj += "^x *log(";
-							wyj += a;
-							wyj += ')';
-						}
-						else
-						{
-							wyj += a;
-							wyj += '^';
-							wyj += b;
+											}
+											else
+												if (b == 'x')
+												{
+													wyj += a;
+													wyj += "^x *log(";
+													wyj += a;
+													wyj += ')';
+												}
+												else
+												{
+													wyj += a;
+													wyj += '^';
+													wyj += b;
 							
-						}
-				temp.push(z);
-				wyj += z;
-			}
+												}
+										temp.push(z);
+									}
 
-			if (c[i] == '/')			//(a/b)'
-			{
-				if (a == 'x' && b == 'x')
-				{
-					z = '0';
-				}
-				else
-					if (a == 'x')
-					{
-						wyj += "1/";
-						wyj += b;
+									if (c[i] == '/')			//(a/b)'
+									{
+										if (a == 'x' && b == 'x')
+										{
+											z = '0';
+										}
+										else
+											if (a == 'x')
+											{
+												wyj += "1/";
+												wyj += b;
 
-					}
-					else
-						if (b == 'x')
-						{
-							wyj += '-';
-							wyj += a;
-							wyj +=  "/(x ^ 2)";
+											}
+											else
+												if (b == 'x')
+												{
+													wyj += '-';
+													wyj += a;
+													wyj +=  "/(x ^ 2)";
 							
-						}
-						else
-						{
-							wyj += a;
-							wyj += '/';
-							wyj += b;
-						}
-				temp.push(z);
-				wyj += z;
-			}
-		}
+												}
+												else
+												{
+													wyj += a;
+													wyj += '/';
+													wyj += b;
+												}
+										temp.push(z);
+										wyj += z;
+									}
+								}
 		
-	}
-	text = wyj;
+							}
+		text = wyj;
 }
 
 
